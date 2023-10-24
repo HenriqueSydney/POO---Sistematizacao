@@ -1,0 +1,44 @@
+{
+  "transactions": [
+    {
+      "id": 1,
+      "description": "Desenvolvimento de Site",
+      "type": "income",
+      "category": "Venda",
+      "price": 14000,
+      "createdAt": "2023-06-15T00:44:13.214Z"
+    },
+    {
+      "id": 2,
+      "description": "Hamburger",
+      "type": "outcome",
+      "category": "Alimentação",
+      "price": 50,
+      "createdAt": "2023-06-14T00:44:13.214Z"
+    },
+    {
+      "description": "sadfasdfsadf",
+      "type": "income",
+      "category": "dsafdf",
+      "price": 123,
+      "createdAt": "2023-06-17T01:43:10.387Z",
+      "id": 3
+    },
+    {
+      "description": "afd",
+      "type": "income",
+      "category": "fsadfsdaf",
+      "price": 2321,
+      "createdAt": "2023-06-17T01:54:50.628Z",
+      "id": 4
+    },
+    {
+      "description": "111111",
+      "type": "income",
+      "category": "1111",
+      "price": 11111,
+      "createdAt": "2023-06-17T01:56:16.399Z",
+      "id": 5
+    }
+  ]
+}
