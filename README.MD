@@ -71,7 +71,15 @@ Isso encerrará e removerá os contêineres associados ao aplicativo.
 ## Rotas e Parâmetros
 1. DeliveryMen<br>
 GET: http://localhost:8080/deliverymen/{id} => listagem de um entregador por ID<br>
+```bash
+curl -X GET http://localhost:8080/deliverymen/{id}
+```
+
 GET: http://localhost:8080/deliverymen/ => Listar todos os pacotes<br>
+```bash
+curl -X GET http://localhost:8080/deliverymen/
+```
+
 POST: http://localhost:8080/deliverymen/ => Criar pacote<br>
 ```json
    {
@@ -80,6 +88,14 @@ POST: http://localhost:8080/deliverymen/ => Criar pacote<br>
         "vehicleCapacity": "MEDIUM"
    }
 ```
+```bash
+curl -X POST http://localhost:8080/deliverymen/ -H "Content-Type: application/json" -d '{
+    "cpf": "11111111111",
+    "name": "Henrique Lima",
+    "vehicleCapacity": "MEDIUM"
+}'
+```
+
 
 PUT: http://localhost:8080/deliverymen/{id} => Atualizar um pacote<br>
 ```json
@@ -89,14 +105,36 @@ PUT: http://localhost:8080/deliverymen/{id} => Atualizar um pacote<br>
         "vehicleCapacity": "MEDIUM"
    }
 ```
+```bash
+curl -X PUT http://localhost:8080/deliverymen/{id} -H "Content-Type: application/json" -d '{
+    "cpf": "11111111111",
+    "name": "Henrique Lima",
+    "vehicleCapacity": "MEDIUM"
+}'
+```
+
 
 DELETE: http://localhost:8080/deliverymen/{id} => Deletar um pacote<br>
-
+```bash
+curl -X DELETE http://localhost:8080/deliverymen/{id}
+```
 
 2. packages<br>
 GET: http://localhost:8080/packages/byCode/${packageCode} = listagem de um pacote por código<br>
+```bash
+curl -X GET http://localhost:8080/packages/byCode/${packageCode}
+```
+
 GET: http://localhost:8080/packages/{id} => listagem de um pacote por ID<br>
+```bash
+curl -X GET http://localhost:8080/packages/{id}
+```
+
 GET: http://localhost:8080/packages/ => Listar todos os pacotes<br>
+```bash
+curl -X GET http://localhost:8080/packages/
+```
+
 POST: http://localhost:8080/packages/ => Criar pacote<br>
 ```json
    {
@@ -104,6 +142,13 @@ POST: http://localhost:8080/packages/ => Criar pacote<br>
         "receivedDateTime": "2023-11-08T15:45:32.000Z"
    }
 ```
+```bash
+curl -X POST http://localhost:8080/packages/ -H "Content-Type: application/json" -d '{
+    "itemName": "Casinha de Boneca",
+    "receivedDateTime": "2023-11-08T15:45:32.000Z"
+}'
+```
+
 
 PUT: http://localhost:8080/packages/{id} => Atualizar um pacote<br>
 ```json
@@ -111,28 +156,62 @@ PUT: http://localhost:8080/packages/{id} => Atualizar um pacote<br>
         "itemName": "Casinha de Boneca",
         "receivedDateTime": "2023-11-08T15:45:32.000Z",
         "deliveredDateTime": "2023-12-08T15:45:32.000Z",
-        "deliveryMan" {
+        "deliveryMan": {
             "id": "ID do Entregador"
         }
    }
 ```
+```bash
+curl -X PUT http://localhost:8080/packages/{id} -H "Content-Type: application/json" -d '{
+    "itemName": "Casinha de Boneca",
+    "receivedDateTime": "2023-11-08T15:45:32.000Z",
+    "deliveredDateTime": "2023-12-08T15:45:32.000Z",
+    "deliveryMan": {
+        "id": "ID do Entregador"
+    }
+}'
+```
+
 
 DELETE: http://localhost:8080/packages/{id} => Deletar um pacote<br>
+```bash
+curl -X DELETE http://localhost:8080/packages/{id}
+```
+
 
 3. claim<br>
 GET: http://localhost:8080/claims/{id} => listagem de uma reclamação por ID<br>
+```bash
+curl -X GET http://localhost:8080/claims/{id}
+```
+
 GET: http://localhost:8080/claims/ => Listar todos as reclamações<br>
+```bash
+curl -X GET http://localhost:8080/claims/
+```
+
 POST: http://localhost:8080/claims/ => Criar reclamação<br>
 ```json
    {
         "claimantName": "Henrique Lima",
         "phoneNumber": "61555555555",
         "claimDescription": "Tive um problema com o meu pacote. Não foi entregue",
-        "packageModel" {
+        "packageModel": {
             "id": "ID do PACOTE"
         }
    }
 ```
+```bash
+curl -X POST http://localhost:8080/claims/ -H "Content-Type: application/json" -d '{
+    "claimantName": "Henrique Lima",
+    "phoneNumber": "61555555555",
+    "claimDescription": "Tive um problema com o meu pacote. Não foi entregue",
+    "packageModel": {
+        "id": "ID do PACOTE"
+    }
+}'
+```
+
 
 PATCH: http://localhost:8080/claims/{id} => Atualizar um atributo de uma reclamação<br>
 ```json
@@ -140,8 +219,18 @@ PATCH: http://localhost:8080/claims/{id} => Atualizar um atributo de uma reclama
         "claimSolutionDescription": "Me desculpe senhor, verificaremos o que aconteceu"
    }
 ```
+```bash
+curl -X PATCH http://localhost:8080/claims/{id} -H "Content-Type: application/json" -d '{
+    "claimSolutionDescription": "Me desculpe senhor, verificaremos o que aconteceu"
+}'
+```
+
 
 DELETE: http://localhost:8080/claims/{id} => Deletar uma reclamação<br>
+```bash
+curl -X DELETE http://localhost:8080/claims/{id}
+```
+
 
 ## Contextualização - Descrição do Projeto, segundo Sistematização da Instituição
 

@@ -17,6 +17,8 @@ import {
 } from './styles'
 import { useDeliveryManSummary } from '../../hooks/useDeliveryManSummary'
 import { Toast } from '../../components/Toast'
+import { AxiosError } from 'axios'
+import { toast } from 'react-toastify'
 
 export function DeliveryMen() {
   const [summaryContent, setSummaryContent] = useState<SummaryContent[]>([])
@@ -36,7 +38,11 @@ export function DeliveryMen() {
     try {
       deliveryMen.removeDeliveryMan(deliveryManId)
     } catch (error) {
-      console.log(error)
+      if (error instanceof AxiosError && error.response) {
+        toast.error(error.response.data)
+      } else {
+        toast.error('Erro interno do sistema. Tente novamente mais tarde')
+      }
     }
   }
 

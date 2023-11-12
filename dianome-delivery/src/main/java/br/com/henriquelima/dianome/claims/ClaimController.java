@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.henriquelima.dianome.errors.InternalServerErrorException;
 import br.com.henriquelima.dianome.utils.ResponseFormatter;
 import br.com.henriquelima.dianome.utils.Utils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,10 +40,15 @@ public class ClaimController {
         if(isClaimForPackageExists != null && isClaimForPackageExists.getClaimSolutionDescription() == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Uma reclamação acerca do pedido já foi criada e ainda está aberta. Aguarde o encerramento para abrir uma nova reclamação");
         }
-        
-        var claimCreated = this.claimRepository.save(claimModel);
-        var claimDTO = new ClaimDTO(claimCreated);
-        return ResponseEntity.status(HttpStatus.CREATED).body(claimDTO);
+
+        try {
+            var claimCreated = this.claimRepository.save(claimModel);
+            var claimDTO = new ClaimDTO(claimCreated);
+            return ResponseEntity.status(HttpStatus.CREATED).body(claimDTO);
+        } catch (Exception e) {         
+            throw new InternalServerErrorException(e.getMessage(), e);
+        }       
+       
     }
 
     @GetMapping("/")
@@ -91,11 +97,13 @@ public class ClaimController {
 
         Utils.copyNonNullProperties(claimModel, claim);
 
-        var updatedClaim = this.claimRepository.save(claim);
-
-        ClaimDTO updatedClaimDTO = new ClaimDTO(updatedClaim);
-        
-        return ResponseEntity.status(HttpStatus.OK).body(updatedClaimDTO);
+        try {
+            var updatedClaim = this.claimRepository.save(claim);
+            ClaimDTO updatedClaimDTO = new ClaimDTO(updatedClaim);
+            return ResponseEntity.status(HttpStatus.OK).body(updatedClaimDTO);
+        } catch (Exception e) {
+             throw new InternalServerErrorException(e.getMessage(), e);
+        }
     }
 
      @DeleteMapping("/{id}")

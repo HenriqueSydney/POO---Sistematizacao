@@ -140,7 +140,7 @@ export function DeliveryManCreateForm() {
       if (error instanceof AxiosError && error.response) {
         toast.error(error.response.data)
       } else {
-        toast.error('Erro interno do sistema. Equipe de suporte foi notificada')
+        toast.error('Erro interno do sistema. Tente novamente mais tarde')
       }
     }
   }
@@ -166,7 +166,7 @@ export function DeliveryManCreateForm() {
       if (error instanceof AxiosError && error.response) {
         toast.error(error.response.data)
       } else {
-        toast.error('Erro interno do sistema. Equipe de suporte foi notificada')
+        toast.error('Erro interno do sistema. Tente novamente mais tarde')
       }
     }
   }

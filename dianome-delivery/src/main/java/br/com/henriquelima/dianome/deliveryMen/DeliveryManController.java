@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.henriquelima.dianome.enums.VehicleCapacityEnum;
+import br.com.henriquelima.dianome.errors.InternalServerErrorException;
 import br.com.henriquelima.dianome.utils.ResponseFormatter;
 import br.com.henriquelima.dianome.utils.Utils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -52,11 +53,13 @@ public class DeliveryManController {
            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Capacidade de veículo informada inválida");
         } 
 
-        var deliveryManCreated = this.deliveryManRepository.save(deliveryManModel);
-        var deliveryManDTO = new DeliveryManDTO(deliveryManCreated);
-       
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(deliveryManDTO);
+        try {               
+            var deliveryManCreated = this.deliveryManRepository.save(deliveryManModel);
+            var deliveryManDTO = new DeliveryManDTO(deliveryManCreated);  
+            return ResponseEntity.status(HttpStatus.CREATED).body(deliveryManDTO);
+        } catch (Exception e) {
+            throw new InternalServerErrorException(e.getMessage(), e);
+        }
     }
 
     @GetMapping("/")
@@ -80,21 +83,24 @@ public class DeliveryManController {
 
             return ResponseEntity.status(HttpStatus.OK).body(deliveryMenDTO);
         } catch (Exception e){
-            System.out.println("Error: " + e.getMessage());
-              return ResponseEntity.status(HttpStatus.OK).body("Error: " + e.getMessage());
+             throw new InternalServerErrorException(e.getMessage(), e);
         }        
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable UUID id, HttpServletRequest request){
        
-        var deliveryMan = this.deliveryManRepository.findById(id);
+        try {
+            var deliveryMan = this.deliveryManRepository.findById(id);
 
-        if(deliveryMan == null){
-             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Entregador não localizado");
+            if (!deliveryMan.isPresent()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Entregador não localizado");
+            } 
+
+            return ResponseEntity.status(HttpStatus.OK).body(deliveryMan.get());
+        } catch (Exception e) {
+            throw new InternalServerErrorException(e.getMessage(), e);
         }
-
-        return ResponseEntity.status(HttpStatus.OK).body(deliveryMan);
     }
 
     @PutMapping("/{id}")
@@ -109,10 +115,14 @@ public class DeliveryManController {
             }
         
             Utils.copyNonNullProperties(deliveryManModel, existingDeliveryMan);
-        
-            var updatedDeliveryMan = this.deliveryManRepository.save(existingDeliveryMan);
-        
-            return ResponseEntity.status(HttpStatus.OK).body(updatedDeliveryMan);
+
+            try {
+                var updatedDeliveryMan = this.deliveryManRepository.save(existingDeliveryMan);            
+                return ResponseEntity.status(HttpStatus.OK).body(updatedDeliveryMan);
+            } catch (Exception e) {
+                throw new InternalServerErrorException(e.getMessage(), e);
+            }
+            
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Entregador não localizado");
         }

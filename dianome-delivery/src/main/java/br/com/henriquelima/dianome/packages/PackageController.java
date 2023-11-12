@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.henriquelima.dianome.errors.InternalServerErrorException;
 import br.com.henriquelima.dianome.utils.RandomPackageCodeGenerator;
 import br.com.henriquelima.dianome.utils.ResponseFormatter;
 import br.com.henriquelima.dianome.utils.Utils;
@@ -34,99 +35,117 @@ public class PackageController {
 
     @PostMapping("/")
     public ResponseEntity<?> create(@RequestBody PackageModel packageModel, HttpServletRequest request){
-               
-        try {
-            packageModel.updatePackageModel();
-        } catch (Exception e) {
-             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
         
+        try {  
+            RandomPackageCodeGenerator packageCode = new RandomPackageCodeGenerator();
+            packageModel.setPackageCode(packageCode.getPackageCode());
 
-        RandomPackageCodeGenerator packageCode = new RandomPackageCodeGenerator();
-        packageModel.setPackageCode(packageCode.getPackageCode());
-                
-        var createdPackage = this.packageRepository.save(packageModel);
+            packageModel.updatePackageModel();
 
-        return ResponseEntity.status(HttpStatus.OK).body(createdPackage);
+            var createdPackageCreated = this.packageRepository.save(packageModel);
+            var packageDTO = new PackageDTO(createdPackageCreated);  
+            return ResponseEntity.status(HttpStatus.OK).body(packageDTO);  
+        } catch (Exception e) {
+            throw new InternalServerErrorException(e.getMessage(), e);
+        }
     }
 
     @GetMapping("/")
     public ResponseEntity<List<PackageDTO>> list(@RequestParam(required = false) String query, HttpServletRequest request){
-        List<PackageModel> packages;
-        if(query != null){
-            PackageModel packageItem = this.packageRepository.findByPackageCode(query);
-            if (packageItem != null) {
-                packages = Collections.singletonList(packageItem);
+        try {
+            List<PackageModel> packages;
+            if(query != null){
+                PackageModel packageItem = this.packageRepository.findByPackageCode(query);
+                if (packageItem != null) {
+                    packages = Collections.singletonList(packageItem);
+                } else {
+                    packages = Collections.emptyList();
+                }
             } else {
-                packages = Collections.emptyList();
+                packages = this.packageRepository.findAll();
             }
-        } else {
-             packages = this.packageRepository.findAll();
-        }
-        
-        List<PackageDTO> packageDTO = packages.stream()
-            .map(packageModel -> new PackageDTO(packageModel))
-            .collect(Collectors.toList());
+            
+            List<PackageDTO> packageDTO = packages.stream()
+                .map(packageModel -> new PackageDTO(packageModel))
+                .collect(Collectors.toList());
 
-        return ResponseEntity.status(HttpStatus.OK).body(packageDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(packageDTO);
+        } catch (Exception e) {
+            throw new InternalServerErrorException(e.getMessage(), e);
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable UUID id, HttpServletRequest request) {
-        var savedPackage = this.packageRepository.findById(id).orElse(null);
+        try {
+            var savedPackage = this.packageRepository.findById(id).orElse(null);
 
-        if(savedPackage == null){
-             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pacote não encontrado");
+            if(savedPackage == null){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pacote não encontrado");
+            }
+
+            return ResponseEntity.status(HttpStatus.OK).body(savedPackage);
+        } catch (Exception e) {
+            throw new InternalServerErrorException(e.getMessage(), e);
         }
-
-        return ResponseEntity.status(HttpStatus.OK).body(savedPackage);
     }
 
     @GetMapping("/byCode/{packageCode}")
     public ResponseEntity<?> getByPackageCode(@PathVariable String packageCode, HttpServletRequest request) {
-        var savedPackage = this.packageRepository.findByPackageCode(packageCode);
+        try{
+            var savedPackage = this.packageRepository.findByPackageCode(packageCode);
 
-        if(savedPackage == null){
-             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pacote não encontrado");
+            if(savedPackage == null){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pacote não encontrado");
+            }
+
+            return ResponseEntity.status(HttpStatus.OK).body(savedPackage);
+        } catch (Exception e) {
+            throw new InternalServerErrorException(e.getMessage(), e);
         }
-
-        return ResponseEntity.status(HttpStatus.OK).body(savedPackage);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody PackageModel packageModel, @PathVariable UUID id, HttpServletRequest request) {
-        var savedPackage = this.packageRepository.findById(id).orElse(null);
-
-        if(savedPackage == null){
-             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pacote não encontrado");
-        }
-
         try {
-            packageModel.updatePackageModel();
-        } catch (Exception e) {
-             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-        Utils.copyNonNullProperties(packageModel, savedPackage);
-        var updatedTask = this.packageRepository.save(savedPackage);
+            var savedPackage = this.packageRepository.findById(id).orElse(null);
 
-        return ResponseEntity.status(HttpStatus.OK).body(updatedTask);
+            if(savedPackage == null){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pacote não encontrado");
+            }
+
+        
+            packageModel.updatePackageModel();
+            
+        
+            Utils.copyNonNullProperties(packageModel, savedPackage);
+            var updatedTask = this.packageRepository.save(savedPackage);
+
+            return ResponseEntity.status(HttpStatus.OK).body(updatedTask);
+        } catch (Exception e) {
+            throw new InternalServerErrorException(e.getMessage(), e);
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable UUID id, HttpServletRequest request) {
-        var savedPackage = this.packageRepository.findById(id).orElse(null);
+        try {
+            var savedPackage = this.packageRepository.findById(id).orElse(null);
 
-        if(savedPackage == null){
-             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pacote não encontrado");
+            if(savedPackage == null){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pacote não encontrado");
+            }
+
+            String packageName = savedPackage.getItemName();
+
+            this.packageRepository.delete(savedPackage);
+
+            ResponseFormatter response = new ResponseFormatter("Pacote " + packageName + " removido com sucesso");
+            String jsonResponse = response.toJson();
+
+            return ResponseEntity.status(HttpStatus.OK).body(jsonResponse);
+        } catch (Exception e) {
+            throw new InternalServerErrorException(e.getMessage(), e);
         }
-
-        String packageName = savedPackage.getItemName();
-
-        this.packageRepository.delete(savedPackage);
-
-        ResponseFormatter response = new ResponseFormatter("Pacote " + packageName + " removido com sucesso");
-        String jsonResponse = response.toJson();
-
-        return ResponseEntity.status(HttpStatus.OK).body(jsonResponse);
     }
 }

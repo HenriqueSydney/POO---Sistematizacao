@@ -13,4 +13,9 @@ public class ExceptionHandlerController {
     public ResponseEntity<String> handleHttpMessageNotReadableException(HttpMessageNotReadableException e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMostSpecificCause().getMessage());
     }
+
+    @ExceptionHandler(InternalServerErrorException.class)
+    public ResponseEntity<String> handleInternalServerErrorException(InternalServerErrorException e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+    }
 }
