@@ -24,6 +24,7 @@ Antes de começar, certifique-se de ter o seguinte instalado em sua máquina:
 - [Docker](https://www.docker.com/get-started)
 - [Node.js](https://nodejs.org/) (incluindo npm)
 - [Java 17](https://www.oracle.com/java/)
+- [Maven](https://maven.apache.org/)
 
 ## Como Baixar e Executar
 
