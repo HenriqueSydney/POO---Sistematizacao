@@ -42,7 +42,7 @@ Siga estas etapas para baixar e executar o aplicativo localmente:
 
 3. Construa a imagem Docker:
 ```bash
-     docker-compose build
+    docker-compose build
 ```
 
 4. Inicie os contêineres:
@@ -69,7 +69,7 @@ Se desejar parar e remover os contêineres, você pode usar o seguinte comando:
 Isso encerrará e removerá os contêineres associados ao aplicativo.
 
 ## Rotas e Parâmetros
-1. DeliveryMen
+1. DeliveryMen<br>
 GET: http://localhost:8080/deliverymen/{id} => listagem de um entregador por ID<br>
 GET: http://localhost:8080/deliverymen/ => Listar todos os pacotes<br>
 POST: http://localhost:8080/deliverymen/ => Criar pacote<br>
@@ -93,7 +93,7 @@ PUT: http://localhost:8080/deliverymen/{id} => Atualizar um pacote<br>
 DELETE: http://localhost:8080/deliverymen/{id} => Deletar um pacote<br>
 
 
-2. packages
+2. packages<br>
 GET: http://localhost:8080/packages/byCode/${packageCode} = listagem de um pacote por código<br>
 GET: http://localhost:8080/packages/{id} => listagem de um pacote por ID<br>
 GET: http://localhost:8080/packages/ => Listar todos os pacotes<br>
@@ -119,7 +119,7 @@ PUT: http://localhost:8080/packages/{id} => Atualizar um pacote<br>
 
 DELETE: http://localhost:8080/packages/{id} => Deletar um pacote<br>
 
-3. claim
+3. claim<br>
 GET: http://localhost:8080/claims/{id} => listagem de uma reclamação por ID<br>
 GET: http://localhost:8080/claims/ => Listar todos as reclamações<br>
 POST: http://localhost:8080/claims/ => Criar reclamação<br>
