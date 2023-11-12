@@ -11,7 +11,7 @@ O APP contém um conjunto de:
 Abaixo, listagem de rotas e parâmetros esperados.
 
 ## Framework/Linguagem de Programação Utilizada
-Backend: SpringBoot/Java
+Backend: SpringBoot/Java<br>
 Frontend: React/JS
 
 ## Database
@@ -58,6 +58,8 @@ Você pode acessar o front-end (http://localhost:5173/) no seu navegador para ac
 Observar que as entidades possuem relacionamento. Sugere-se iniciar com a criação de entregadores, em seguida, pacotes e, por fim, reclamações.
 
 Não obstante, na tela inicial há um botão para inicialização da aplicação, que basicamente cria registros randômicos para entregadores e pacotes.
+
+OBSERVAÇÃO: Se não optar por não utilizar o Docker para subir as imagens, haverá a necessidade de configuração de acesso à Base de Dados, disponível no arquivo resources > application.properties.
 
 ## Parar e Remover os Contêineres
 
