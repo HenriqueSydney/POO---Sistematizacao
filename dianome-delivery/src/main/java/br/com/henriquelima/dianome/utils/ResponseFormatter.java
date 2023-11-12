@@ -13,9 +13,19 @@ public class ResponseFormatter {
         this.data.put("message", message);
     }
 
-    public ResponseFormatter(String message, String resourceName, Object additionalResource) {
+    public ResponseFormatter(String message, String resourceName,  Object... resources) throws IllegalArgumentException {
         this.data.put("message", message);
-        this.data.put(resourceName, additionalResource);
+
+        if (resources.length % 2 != 0) {
+            throw new IllegalArgumentException("Os recursos devem ser passados como pares (nome, objeto).");
+        }
+        
+        for (int i = 0; i < resources.length; i += 2)   {
+            if (!(resources[i] instanceof String)) {
+                throw new IllegalArgumentException("Os nomes dos recursos devem ser do tipo String.");
+            }
+            this.data.put((String) resources[i], resources[i + 1]);
+        }
     }
 
     public String toJson() {

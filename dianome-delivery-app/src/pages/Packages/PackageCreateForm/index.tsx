@@ -77,7 +77,10 @@ export function PackageCreateForm() {
         setValue('deliveredDateTime', new Date(packageItem.deliveredDateTime))
       }
 
-      setValue('deliveryManId', packageItem.deliveryMan.id)
+      const deliveryMenIdUpdate =
+        packageItem.deliveryMan !== null ? packageItem.deliveryMan.id : ''
+
+      setValue('deliveryManId', deliveryMenIdUpdate)
     }
   }
 
@@ -97,7 +100,10 @@ export function PackageCreateForm() {
         packageItem && packageItem.deliveredDateTime
           ? new Date(packageItem.deliveredDateTime)
           : null,
-      deliveryManId: packageItem ? packageItem.deliveryMan.id : '',
+      deliveryManId:
+        packageItem && packageItem.deliveryMan !== null
+          ? packageItem.deliveryMan.id
+          : '',
     },
   })
 
@@ -170,7 +176,10 @@ export function PackageCreateForm() {
 
   useEffect(() => {
     if (packageItem) {
-      setValue('deliveryManId', packageItem.deliveryMan.id)
+      const deliveryMenId =
+        packageItem.deliveryMan !== null ? packageItem.deliveryMan.id : ''
+
+      setValue('deliveryManId', deliveryMenId)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [packageItem])

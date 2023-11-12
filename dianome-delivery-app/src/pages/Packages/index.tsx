@@ -124,7 +124,11 @@ export function Package() {
                           year: 'numeric',
                         })}
                       </td>
-                      <td>{packageItem.deliveryMan.name}</td>
+                      <td>
+                        {packageItem && packageItem.deliveryMan !== null
+                          ? packageItem.deliveryMan.name
+                          : ''}
+                      </td>
                       <td>
                         {packageItem.deliveredDateTime &&
                           new Date(

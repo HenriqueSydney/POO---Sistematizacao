@@ -1,0 +1,57 @@
+version: "3.9"
+
+services:
+  # Configuração do serviço de banco de dados MySQL
+  database: 
+    image: mysql:8.0
+    container_name: database_dianome
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456  # Senha do usuário root do MySQL
+      - MYSQL_DATABASE=dianome       # Nome do banco de dados
+      - MYSQL_USER=docker            # Nome de usuário do MySQL
+      - MYSQL_PASSWORD=123456        # Senha do usuário do MySQL
+    volumes:
+      - mysqldata:/var/lib/mysql     # Volume para persistir os dados do MySQL
+    networks:
+      - dianome-network  # Nome da rede para comunicação entre os serviços
+
+  # Configuração do serviço da aplicação Spring Boot
+  backend:
+    image: dianome-app-backend  # Nome da imagem Docker da sua aplicação Spring Boot
+    container_name: dianome
+    build:  
+      context: ./dianome-delivery
+    ports: 
+      - 8080:8080
+    depends_on:
+      - database
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://database:3306/dianome  # URL de conexão do banco de dados
+      - SPRING_DATASOURCE_USERNAME=docker                      # Nome de usuário do banco de dados
+      - SPRING_DATASOURCE_PASSWORD=123456                      # Senha do banco de dados
+    networks:
+      - dianome-network  # Nome da rede para comunicação entre os serviços
+
+  frontend:
+    image: dianome-frontend  # Nome da imagem Docker da sua aplicação Spring Boot
+    container_name: dianome-app-frontend
+    build:
+      context: ./dianome-delivery-app
+    ports:
+      - "5173:5173"    
+    networks:
+      - dianome-network  # Nome da rede para comunicação entre os serviços
+
+# Configuração da rede para comunicação entre os serviços
+networks:
+  dianome-network:
+    driver: bridge
+
+
+# Configuração do volume para persistir os dados do MySQL
+volumes:
+  mysqldata:
+    driver: local
