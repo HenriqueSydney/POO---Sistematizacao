@@ -58,7 +58,7 @@ public class DeliveryManController {
             var deliveryManDTO = new DeliveryManDTO(deliveryManCreated);  
             return ResponseEntity.status(HttpStatus.CREATED).body(deliveryManDTO);
         } catch (Exception e) {
-            throw new InternalServerErrorException(e.getMessage(), e);
+            throw new InternalServerErrorException(e.getMessage());
         }
     }
 
@@ -83,7 +83,7 @@ public class DeliveryManController {
 
             return ResponseEntity.status(HttpStatus.OK).body(deliveryMenDTO);
         } catch (Exception e){
-             throw new InternalServerErrorException(e.getMessage(), e);
+             throw new InternalServerErrorException(e.getMessage());
         }        
     }
 
@@ -99,7 +99,7 @@ public class DeliveryManController {
 
             return ResponseEntity.status(HttpStatus.OK).body(deliveryMan.get());
         } catch (Exception e) {
-            throw new InternalServerErrorException(e.getMessage(), e);
+            throw new InternalServerErrorException(e.getMessage());
         }
     }
 
@@ -107,8 +107,19 @@ public class DeliveryManController {
     public ResponseEntity<?> update(@RequestBody DeliveryManModel deliveryManModel, @PathVariable UUID id, HttpServletRequest request) {
         var deliveryMan = this.deliveryManRepository.findById(id);
 
-        if (deliveryMan.isPresent()) {
+        if (deliveryMan.isPresent()) {           
+
+            if (!deliveryMan.isPresent()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Entregador não localizado");
+            } 
+         
             DeliveryManModel existingDeliveryMan = deliveryMan.get();
+
+            var isDeliveryManWithSameCpf = this.deliveryManRepository.findByCpf(deliveryManModel.getCpf());
+
+            if (isDeliveryManWithSameCpf != null && !isDeliveryManWithSameCpf.getId().equals(existingDeliveryMan.getId())) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Já existe entregador com o mesmo CPF informado");
+            }    
         
             if (isValidVehicleCapacity(deliveryManModel.getVehicleCapacity())) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Capacidade de veículo informada inválida");
@@ -120,7 +131,7 @@ public class DeliveryManController {
                 var updatedDeliveryMan = this.deliveryManRepository.save(existingDeliveryMan);            
                 return ResponseEntity.status(HttpStatus.OK).body(updatedDeliveryMan);
             } catch (Exception e) {
-                throw new InternalServerErrorException(e.getMessage(), e);
+                throw new InternalServerErrorException(e.getMessage());
             }
             
         } else {

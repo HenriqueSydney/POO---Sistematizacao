@@ -46,7 +46,7 @@ public class ClaimController {
             var claimDTO = new ClaimDTO(claimCreated);
             return ResponseEntity.status(HttpStatus.CREATED).body(claimDTO);
         } catch (Exception e) {         
-            throw new InternalServerErrorException(e.getMessage(), e);
+            throw new InternalServerErrorException(e.getMessage());
         }       
        
     }
@@ -102,7 +102,7 @@ public class ClaimController {
             ClaimDTO updatedClaimDTO = new ClaimDTO(updatedClaim);
             return ResponseEntity.status(HttpStatus.OK).body(updatedClaimDTO);
         } catch (Exception e) {
-             throw new InternalServerErrorException(e.getMessage(), e);
+             throw new InternalServerErrorException(e.getMessage());
         }
     }
 

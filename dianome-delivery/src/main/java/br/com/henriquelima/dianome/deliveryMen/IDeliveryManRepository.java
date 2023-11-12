@@ -9,5 +9,6 @@ public interface IDeliveryManRepository extends JpaRepository<DeliveryManModel, 
     List<DeliveryManModel> findManyByName(String name);
     DeliveryManModel findByName(String name);
     DeliveryManModel findByCpf(String cpf);
+    boolean existsByCpfAndIdNot(String cpf, UUID id);
 
 }

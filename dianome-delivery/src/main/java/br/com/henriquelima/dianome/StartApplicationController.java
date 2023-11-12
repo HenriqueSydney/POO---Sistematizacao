@@ -61,7 +61,7 @@ public class StartApplicationController {
             String jsonResponse = response.toJson();
             return ResponseEntity.status(HttpStatus.OK).body(jsonResponse);
         }catch (Exception e){
-            throw new InternalServerErrorException(e.getMessage(), e);
+            throw new InternalServerErrorException(e.getMessage());
        }  
     }
 }

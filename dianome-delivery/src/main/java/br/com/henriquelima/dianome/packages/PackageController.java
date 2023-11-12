@@ -46,7 +46,7 @@ public class PackageController {
             var packageDTO = new PackageDTO(createdPackageCreated);  
             return ResponseEntity.status(HttpStatus.OK).body(packageDTO);  
         } catch (Exception e) {
-            throw new InternalServerErrorException(e.getMessage(), e);
+            throw new InternalServerErrorException(e.getMessage());
         }
     }
 
@@ -71,7 +71,7 @@ public class PackageController {
 
             return ResponseEntity.status(HttpStatus.OK).body(packageDTO);
         } catch (Exception e) {
-            throw new InternalServerErrorException(e.getMessage(), e);
+            throw new InternalServerErrorException(e.getMessage());
         }
     }
 
@@ -86,7 +86,7 @@ public class PackageController {
 
             return ResponseEntity.status(HttpStatus.OK).body(savedPackage);
         } catch (Exception e) {
-            throw new InternalServerErrorException(e.getMessage(), e);
+            throw new InternalServerErrorException(e.getMessage());
         }
     }
 
@@ -101,7 +101,7 @@ public class PackageController {
 
             return ResponseEntity.status(HttpStatus.OK).body(savedPackage);
         } catch (Exception e) {
-            throw new InternalServerErrorException(e.getMessage(), e);
+            throw new InternalServerErrorException(e.getMessage());
         }
     }
 
@@ -123,7 +123,7 @@ public class PackageController {
 
             return ResponseEntity.status(HttpStatus.OK).body(updatedTask);
         } catch (Exception e) {
-            throw new InternalServerErrorException(e.getMessage(), e);
+            throw new InternalServerErrorException(e.getMessage());
         }
     }
 
@@ -145,7 +145,7 @@ public class PackageController {
 
             return ResponseEntity.status(HttpStatus.OK).body(jsonResponse);
         } catch (Exception e) {
-            throw new InternalServerErrorException(e.getMessage(), e);
+            throw new InternalServerErrorException(e.getMessage());
         }
     }
 }
