@@ -6,16 +6,16 @@ Bem-vindo ao APP Dianome! Este é um aplicativo criado para realização de proj
 O APP contém um conjunto de:
 - 5 rotas (GET / GET-{id} / POST / PATCH / DELETE) para CRUD de Reclamações (Claim)
 - 5 rotas (GET / GET-{id} / POST / PUT / DELETE) para CRUD de Entregadores (DeliveryMan)
-- 6 rotas (GET / GET-{id} GET-byCode/{packageCode} / POST / PUT / DELETE) para CRUD de Pacotes (Packages)
+- 6 rotas (GET / GET-{id} / GET-byCode/{packageCode} / POST / PUT / DELETE) para CRUD de Pacotes (Packages)
 
-Abaixo, como listagem de rotas e parâmetros esperados.
+Abaixo, listagem de rotas e parâmetros esperados.
 
 ## Framework/Linguagem de Programação Utilizada
-Backend: SpringBoot/Java;
-Frontend: React/JS;
+Backend: SpringBoot/Java
+Frontend: React/JS
 
 ## Database
-Mysql;
+Mysql
 
 ## Pré-requisitos
 
@@ -50,12 +50,13 @@ Siga estas etapas para baixar e executar o aplicativo localmente:
 ```
 Agora, o aplicativo deve estar em execução.
 
-Com isso do Docker deve ter subido 3 imagens:
-Database:
-Backend: http://localhost:8080/
-Frontend: http://localhost:5173/
+Com isso do Docker deve ter subido 3 imagens: Database; Backend (http://localhost:8080/); Frontend (http://localhost:5173/)
 
-Você pode acessar o front-end (http://localhost:5173/) no seu navegador.
+Você pode acessar o front-end (http://localhost:5173/) no seu navegador para acessar as rotas ou utilizar algum cliente para requisição HTTP ou utilizar CURL com bash
+
+Observar que as entidades possuem relacionamento. Sugere-se iniciar com a criação de entregadores, em seguida, pacotes e, por fim, reclamações.
+
+Não obstante, na tela inicial há um botão para inicialização da aplicação, que basicamente cria registros randômicos para entregadores e pacotes.
 
 ## Parar e Remover os Contêineres
 
