@@ -69,9 +69,9 @@ Isso encerrará e removerá os contêineres associados ao aplicativo.
 
 ## Rotas e Parâmetros
 1. DeliveryMen
-GET: http://localhost:8080/deliverymen/{id} => listagem de um entregador por ID
-GET: http://localhost:8080/deliverymen/ => Listar todos os pacotes
-POST: http://localhost:8080/deliverymen/ => Criar pacote
+GET: http://localhost:8080/deliverymen/{id} => listagem de um entregador por ID<br>
+GET: http://localhost:8080/deliverymen/ => Listar todos os pacotes<br>
+POST: http://localhost:8080/deliverymen/ => Criar pacote<br>
 ```json
    {
         "cpf": "11111111111",
@@ -80,7 +80,7 @@ POST: http://localhost:8080/deliverymen/ => Criar pacote
    }
 ```
 
-PUT: http://localhost:8080/deliverymen/{id} => Atualizar um pacote
+PUT: http://localhost:8080/deliverymen/{id} => Atualizar um pacote<br>
 ```json
    {
         "cpf": "11111111111",
@@ -89,14 +89,14 @@ PUT: http://localhost:8080/deliverymen/{id} => Atualizar um pacote
    }
 ```
 
-DELETE: http://localhost:8080/deliverymen/{id} => Deletar um pacote
+DELETE: http://localhost:8080/deliverymen/{id} => Deletar um pacote<br>
 
 
 2. packages
-GET: http://localhost:8080/packages/byCode/${packageCode} = listagem de um pacote por código
-GET: http://localhost:8080/packages/{id} => listagem de um pacote por ID
-GET: http://localhost:8080/packages/ => Listar todos os pacotes
-POST: http://localhost:8080/packages/ => Criar pacote
+GET: http://localhost:8080/packages/byCode/${packageCode} = listagem de um pacote por código<br>
+GET: http://localhost:8080/packages/{id} => listagem de um pacote por ID<br>
+GET: http://localhost:8080/packages/ => Listar todos os pacotes<br>
+POST: http://localhost:8080/packages/ => Criar pacote<br>
 ```json
    {
         "itemName": "Casinha de Boneca",
@@ -104,7 +104,7 @@ POST: http://localhost:8080/packages/ => Criar pacote
    }
 ```
 
-PUT: http://localhost:8080/packages/{id} => Atualizar um pacote
+PUT: http://localhost:8080/packages/{id} => Atualizar um pacote<br>
 ```json
    {
         "itemName": "Casinha de Boneca",
@@ -116,12 +116,12 @@ PUT: http://localhost:8080/packages/{id} => Atualizar um pacote
    }
 ```
 
-DELETE: http://localhost:8080/packages/{id} => Deletar um pacote
+DELETE: http://localhost:8080/packages/{id} => Deletar um pacote<br>
 
 3. claim
-GET: http://localhost:8080/claims/{id} => listagem de uma reclamação por ID
-GET: http://localhost:8080/claims/ => Listar todos as reclamações
-POST: http://localhost:8080/claims/ => Criar reclamação
+GET: http://localhost:8080/claims/{id} => listagem de uma reclamação por ID<br>
+GET: http://localhost:8080/claims/ => Listar todos as reclamações<br>
+POST: http://localhost:8080/claims/ => Criar reclamação<br>
 ```json
    {
         "claimantName": "Henrique Lima",
@@ -133,14 +133,14 @@ POST: http://localhost:8080/claims/ => Criar reclamação
    }
 ```
 
-PATCH: http://localhost:8080/claims/{id} => Atualizar um atributo de uma reclamação
+PATCH: http://localhost:8080/claims/{id} => Atualizar um atributo de uma reclamação<br>
 ```json
    {
         "claimSolutionDescription": "Me desculpe senhor, verificaremos o que aconteceu"
    }
 ```
 
-DELETE: http://localhost:8080/claims/{id} => Deletar uma reclamação
+DELETE: http://localhost:8080/claims/{id} => Deletar uma reclamação<br>
 
 ## Contextualização - Descrição do Projeto, segundo Sistematização da Instituição
 
