@@ -99,7 +99,7 @@ POST: http://localhost:8080/packages/ => Criar pacote
 ```json
    {
         "itemName": "Casinha de Boneca",
-        "receivedDateTime" "2023-11-08T15:45:32.000Z"
+        "receivedDateTime": "2023-11-08T15:45:32.000Z"
    }
 ```
 
